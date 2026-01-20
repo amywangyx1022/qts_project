@@ -33,9 +33,6 @@ PARAM_BOUNDS: Final[dict[str, tuple[float, float]]] = {
     "M": (1, 1000),  # lookback window (must be >= N)
 }
 
-# Minimum trades per day threshold
-MIN_TRADES_PER_DAY: Final[int] = 5
-
 # Data directory (relative to week2)
 DATA_DIR: Final[Path] = Path(__file__).parent.parent.parent / "data"
 
@@ -50,3 +47,7 @@ RANDOM_SEED: Final[int] = 42
 # Annualization factor for Sharpe ratio
 # For 1-second data: seconds in a year (365 * 24 * 3600)
 SECONDS_PER_YEAR: Final[int] = 365 * 24 * 3600  # 31,536,000
+
+# Minimum trades per day threshold for filtering parameter combinations
+# Per requirement: discard cases with fewer than 5 trades per day
+MIN_TRADES_PER_DAY: Final[int] = 5

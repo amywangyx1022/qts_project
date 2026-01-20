@@ -106,6 +106,21 @@ class BacktestEngine:
             ps = p_small.iloc[i]
             pl = p_large.iloc[i]
 
+            # Track mark-to-market equity FIRST (before any position changes)
+            # This captures unrealized PnL during trades for proper drawdown calculation
+            if position is not None:
+                unrealized_pnl = self.strategy.calculate_trade_pnl(
+                    position.side,
+                    position.entry_price_a,
+                    position.entry_price_b,
+                    pa,
+                    pb,
+                    self.position_size,
+                )
+                equity.append(capital + unrealized_pnl)
+            else:
+                equity.append(capital)
+
             # Check if we've hit capital stop
             if capital <= self.stop_capital:
                 trading_stopped = True
@@ -146,7 +161,7 @@ class BacktestEngine:
                     trades.append(trade)
                     capital += pnl
                     position = None
-                equity.append(capital)
+                # Equity already tracked at start of iteration
                 continue
 
             # If we have a position, check for exit
@@ -203,8 +218,7 @@ class BacktestEngine:
                         size_eth=self.position_size,
                     )
 
-            # Track equity
-            equity.append(capital)
+            # Equity already tracked at start of iteration
 
         # Close any remaining position at end of data
         if position is not None:
@@ -254,12 +268,8 @@ class BacktestEngine:
         num_trades = len(trades)
         trades_per_day = num_trades / num_days if num_days > 0 else 0
 
-        # Calculate returns for Sharpe ratio
-        equity_arr = equity_series.values
-        returns = np.diff(equity_arr) / equity_arr[:-1]
-        returns = pd.Series(returns)
-
-        sharpe = calculate_sharpe_ratio(returns)
+        # Calculate Sharpe ratio using daily returns
+        sharpe = calculate_sharpe_ratio(equity_series)
         max_dd = calculate_max_drawdown(equity_series)
         win_rate = calculate_win_rate(trades)
 

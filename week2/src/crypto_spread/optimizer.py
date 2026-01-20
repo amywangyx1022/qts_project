@@ -11,12 +11,12 @@ from dataclasses import dataclass
 from .backtest import run_backtest
 from .config import (
     PARAM_BOUNDS,
-    MIN_TRADES_PER_DAY,
     DEFAULT_N_TRIALS,
     DEFAULT_N_JOBS,
     RANDOM_SEED,
     INITIAL_CAPITAL,
     STOP_CAPITAL,
+    MIN_TRADES_PER_DAY,
 )
 
 
@@ -106,7 +106,8 @@ def create_objective(
                 stop_capital=stop_capital,
             )
 
-            # Check minimum trades constraint
+            # Filter out parameter combinations with insufficient trades
+            # Per requirement: discard cases with fewer than 5 trades per day
             if result.trades_per_day < MIN_TRADES_PER_DAY:
                 raise optuna.TrialPruned()
 
