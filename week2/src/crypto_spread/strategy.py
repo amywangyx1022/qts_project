@@ -238,3 +238,49 @@ class TradingStrategy:
             f"TradingStrategy(j={self.j:.3f}, g={self.g:.3f}, l={self.l:.3f}, "
             f"N={self.N}, M={self.M}, zeta={self.zeta})"
         )
+
+
+def print_trades(trades: list[Trade], max_trades: Optional[int] = None) -> None:
+    """
+    Print a formatted table of trades for verification.
+
+    Args:
+        trades: List of completed trades
+        max_trades: Maximum number of trades to display (None for all)
+    """
+    if not trades:
+        print("No trades to display.")
+        return
+
+    display_trades = trades[:max_trades] if max_trades else trades
+
+    print(f"\n{'='*120}")
+    print(f"TRADE LOG ({len(display_trades)} of {len(trades)} trades)")
+    print(f"{'='*120}")
+    print(f"{'#':>4} {'Side':<6} {'Entry Time':<20} {'Exit Time':<20} "
+          f"{'Entry A':>10} {'Entry B':>10} {'Exit A':>10} {'Exit B':>10} "
+          f"{'PnL':>10} {'Exit Reason':<12}")
+    print(f"{'-'*120}")
+
+    for i, trade in enumerate(display_trades, 1):
+        entry_time_str = trade.entry_time.strftime('%Y-%m-%d %H:%M:%S')
+        exit_time_str = trade.exit_time.strftime('%Y-%m-%d %H:%M:%S')
+        side_str = trade.side.value
+        exit_reason_str = trade.exit_reason.value
+
+        print(f"{i:>4} {side_str:<6} {entry_time_str:<20} {exit_time_str:<20} "
+              f"{trade.entry_price_a:>10.2f} {trade.entry_price_b:>10.2f} "
+              f"{trade.exit_price_a:>10.2f} {trade.exit_price_b:>10.2f} "
+              f"{trade.pnl:>10.4f} {exit_reason_str:<12}")
+
+    print(f"{'='*120}")
+
+    # Summary statistics
+    total_pnl = sum(t.pnl for t in trades)
+    winning_trades = sum(1 for t in trades if t.pnl > 0)
+    stop_losses = sum(1 for t in trades if t.exit_reason == ExitReason.STOP_LOSS)
+
+    print(f"\nSummary: {len(trades)} trades | "
+          f"Total PnL: {total_pnl:.4f} | "
+          f"Win Rate: {winning_trades/len(trades)*100:.1f}% | "
+          f"Stop Losses: {stop_losses}")

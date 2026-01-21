@@ -13,17 +13,17 @@ from .config import SECONDS_PER_YEAR
 def calculate_sharpe_ratio(
     equity_curve: pd.Series,
     risk_free_rate: float = 0.0,
-    periods_per_year: int = 252,  # Trading days per year
+    periods_per_year: int = 8760,  # 24 hours × 365 days
 ) -> float:
     """
-    Calculate annualized Sharpe ratio using daily returns.
+    Calculate annualized Sharpe ratio using hourly returns.
 
     Formula: Sharpe = sqrt(periods_per_year) * mean(excess_returns) / std(excess_returns)
 
     Args:
         equity_curve: Series of equity values with datetime index
         risk_free_rate: Annual risk-free rate (default: 0%)
-        periods_per_year: Annualization factor (default: 252 trading days)
+        periods_per_year: Annualization factor (default: 8760 hours per year)
 
     Returns:
         Annualized Sharpe ratio
@@ -31,20 +31,20 @@ def calculate_sharpe_ratio(
     if equity_curve.empty or len(equity_curve) < 2:
         return 0.0
 
-    # Resample to daily (end-of-day values) and calculate returns
-    daily_equity = equity_curve.resample('D').last().dropna()
+    # Resample to hourly (end-of-hour values) and calculate returns
+    hourly_equity = equity_curve.resample('H').last().dropna()
 
-    if len(daily_equity) < 2:
+    if len(hourly_equity) < 2:
         return 0.0
 
-    daily_returns = daily_equity.pct_change().dropna()
+    hourly_returns = hourly_equity.pct_change().dropna()
 
-    if len(daily_returns) < 1:
+    if len(hourly_returns) < 1:
         return 0.0
 
     # Calculate excess returns
     rf_per_period = risk_free_rate / periods_per_year
-    excess_returns = daily_returns - rf_per_period
+    excess_returns = hourly_returns - rf_per_period
 
     mean_excess = excess_returns.mean()
     std_excess = excess_returns.std()

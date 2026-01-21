@@ -1,0 +1,112 @@
+{
+  "Binance-Coinbase_zeta0.0": {
+    "spread_pair": [
+      "Binance",
+      "Coinbase"
+    ],
+    "zeta": 0.0,
+    "best_params": {
+      "j": 0.4686517316626232,
+      "g": 1.0216560464998965,
+      "l": 8.990045718007112,
+      "N": 87,
+      "M": 105
+    },
+    "best_sharpe": 302.4472570893718,
+    "n_completed": 29,
+    "n_pruned": 1,
+    "metrics": {
+      "total_return": 0.013592750000003071,
+      "max_drawdown": 0.00014683194258786303,
+      "win_rate": 0.9538188277087034,
+      "trades_per_day": 281.5,
+      "stop_loss_count": 0.0
+    }
+  },
+  "Binance-Coinbase_zeta0.0001": {
+    "spread_pair": [
+      "Binance",
+      "Coinbase"
+    ],
+    "zeta": 0.0001,
+    "best_params": {
+      "j": 0.9234137744882341,
+      "g": 1.815278707320242,
+      "l": 15.472239447743243,
+      "N": 66,
+      "M": 97
+    },
+    "best_sharpe": 176.20489898647406,
+    "n_completed": 12,
+    "n_pruned": 38,
+    "metrics": {
+      "sharpe_ratio": 176.20489898647406,
+      "j": 0.9234137744882341,
+      "g": 1.815278707320242,
+      "l": 15.472239447743243,
+      "N": 66.0,
+      "M": 97.0,
+      "max_drawdown": 9.720401347020581e-05,
+      "total_return": 0.005030244487499476,
+      "win_rate": 0.9940476190476191,
+      "num_trades": 168.0,
+      "trades_per_day": 84.0,
+      "stop_loss_count": 0.0
+    }
+  },
+  "Coinbase-OKX_zeta0.0001": {
+    "spread_pair": [
+      "Coinbase",
+      "OKX"
+    ],
+    "zeta": 0.0001,
+    "best_params": {
+      "j": 1.9613992871037367,
+      "g": 3.405508957527848,
+      "l": 6.833449938792569,
+      "N": 38,
+      "M": 106
+    },
+    "best_sharpe": 45.80221631031861,
+    "n_completed": 1,
+    "n_pruned": 49,
+    "metrics": {
+      "sharpe_ratio": 45.80221631031861,
+      "j": 1.9613992871037367,
+      "g": 3.405508957527848,
+      "l": 6.833449938792569,
+      "N": 38.0,
+      "M": 106.0,
+      "max_drawdown": 5.281887387869599e-05,
+      "total_return": 0.0006271579374999419,
+      "win_rate": 1.0,
+      "num_trades": 11.0,
+      "trades_per_day": 5.5,
+      "stop_loss_count": 0.0
+    }
+  },
+  "Coinbase-OKX_zeta0.0": {
+    "spread_pair": [
+      "Coinbase",
+      "OKX"
+    ],
+    "zeta": 0.0,
+    "best_params": {
+      "j": 1.634437565587021,
+      "g": 1.7151509619323206,
+      "l": 7.686536502338402,
+      "N": 38,
+      "M": 95
+    },
+    "best_sharpe": 111.21165445569937,
+    "n_completed": 18,
+    "n_pruned": 12,
+    "metrics": {
+      "total_return": 0.0033710000000002766,
+      "max_drawdown": 6.518165491605432e-05,
+      "win_rate": 1.0,
+      "trades_per_day": 47.5,
+      "stop_loss_count": 0.0
+    }
+  }
+}

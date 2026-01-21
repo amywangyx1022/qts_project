@@ -1,0 +1,11 @@
+============================================================
+OPTIMIZATION SUMMARY (Parallel Mode)
+============================================================
+
+Binance-Coinbase (zeta=0.0): Sharpe=302.4473
+Binance-Coinbase (zeta=0.0001): Sharpe=176.2049
+Binance-OKX (zeta=0.0): No completed trials
+Coinbase-OKX (zeta=0.0001): Sharpe=45.8022
+Coinbase-OKX (zeta=0.0): Sharpe=111.2117
+Binance-OKX (zeta=0.0001): No completed trials
+============================================================

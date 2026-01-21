@@ -189,7 +189,7 @@ def run_optimization(
         sampler=sampler,
         pruner=pruner,
         storage=storage,
-        load_if_exists=True,
+        load_if_exists=False,
     )
 
     # Create objective function
