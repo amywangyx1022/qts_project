@@ -99,10 +99,11 @@ def calculate_financial_ratios(
     current_dt = pd.to_datetime(current_date)
 
     # Price at per_end_date (or most recent before)
-    price_at_per_end_df = prices_data[prices_data['date'] <= per_end_dt]
-    if len(price_at_per_end_df) == 0:
+    mask = prices_data['date'] <= per_end_dt
+    if not mask.any():
         raise ValueError(f"No price data available on or before {per_end_dt}")
-    price_at_per_end = price_at_per_end_df.iloc[-1]['adj_close']
+    idx = prices_data.loc[mask, 'date'].idxmax()
+    price_at_per_end = prices_data.loc[idx, 'adj_close']
 
     # Price at current date
     price_current_df = prices_data[prices_data['date'] == current_dt]
