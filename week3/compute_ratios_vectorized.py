@@ -118,9 +118,9 @@ def compute_all_ratios_vectorized(
         (prices['date'] <= end_dt)
     ].copy()
 
-    # Sort for merge_asof
-    prices_filtered = prices_filtered.sort_values(['ticker', 'date']).reset_index(drop=True)
-    calendar_sorted = calendar.sort_values(['ticker', 'period_start']).reset_index(drop=True)
+    # Sort for merge_asof (requires the 'on' key to be globally sorted)
+    prices_filtered = prices_filtered.sort_values(['date', 'ticker']).reset_index(drop=True)
+    calendar_sorted = calendar.sort_values(['period_start', 'ticker']).reset_index(drop=True)
 
     # Use merge_asof to match each price to its active filing period
     df = pd.merge_asof(
